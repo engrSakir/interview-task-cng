@@ -45,9 +45,18 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6 col-xl-6 mb-2">
-                                    <label for="company" class="col-sm-4 col-form-label">Product company</label>
-                                    <input name="company" type="text" class="form-control" id="company" value="{{ $product->company }}" required>
-                                    @error('company')
+                                    <label for="price" class="col-sm-4 col-form-label">Product price</label>
+                                    <input name="price" type="text" class="form-control" id="price" value="{{ $product->price }}" required>
+                                    @error('price')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 col-xl-6 mb-2">
+                                    <label for="quantity" class="col-sm-4 col-form-label">Product quantity</label>
+                                    <input name="quantity" type="text" class="form-control" id="quantity" value="{{ $product->quantity }}" required>
+                                    @error('quantity')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
@@ -55,7 +64,7 @@
                                 </div>
                                 <div class="col-lg-6 col-xl-6 mb-2">
                                     <label for="image" class="col-sm-4 col-form-label">Product image</label>
-                                    <img class="rounded-circle" style="max-width: 100px" src="{{ asset($product->image ?? 'assets/frontend/image/resources/medicine2.png') }}">
+                                    <img class="rounded-circle" style="max-width: 100px" src="{{ asset($product->image ?? 'uploads/images/no-image.jpg') }}">
                                     <input name="image" type="file" class="form-control" id="image" value="">
                                     @error('image')
                                     <div class="alert alert-danger" role="alert">

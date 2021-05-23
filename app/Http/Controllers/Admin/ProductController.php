@@ -105,7 +105,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('backend.product.edit', compact('product'));
     }
 
     /**
@@ -156,6 +156,19 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try {
+            if ($product->image != null)
+                File::delete(public_path($product->avatar)); //Old image delete
+            $product->delete();
+            return response()->json([
+                'type' => 'success',
+                'message' => ''
+            ]);
+        }catch (\Exception$exception){
+            return response()->json([
+                'type' => 'error',
+                'message' => ''
+            ]);
+        }
     }
 }
