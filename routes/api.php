@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::post('/login', [Api\AuthController::class, 'login']);
+Route::post('/registration', [Api\AuthController::class, 'registration']);
