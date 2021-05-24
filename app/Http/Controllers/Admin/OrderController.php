@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class OrderController extends Controller
 {
@@ -14,7 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::orderBy('id', 'desc')->get();
+        return view('backend.order.index', compact('orders'));
     }
 
     /**
@@ -46,7 +48,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('backend.order.show', compact('order'));
     }
 
     /**
@@ -69,7 +71,24 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        if ($order->delivered){
+            $order->delivered = false;
+        }else{
+            $order->delivered = true;
+        }
+
+        try {
+            $order->save();
+            return response()->json([
+                'type' => 'success',
+                'message' => 'Successfully done',
+            ]);
+        }catch (\Exception $exception){
+            return response()->json([
+                'type' => 'danger',
+                'message' => $exception->getMessage(),
+            ]);
+        }
     }
 
     /**

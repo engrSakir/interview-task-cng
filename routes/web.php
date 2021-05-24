@@ -26,6 +26,7 @@ Route::post('/cart/order', [FrontendController::class, 'order'])->name('order');
 Route::group(['middleware' => 'auth', 'prefix' => 'backend/', 'as' => 'admin.'], function(){
     Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', Admin\ProductController::class);
+    Route::resource('orders', Admin\OrderController::class);
 });
 
 Route::get('/dashboard', function(){

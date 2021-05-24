@@ -22,10 +22,9 @@
                     </div>
                 </div>
             </div>
-    <!-- Sidebar navigation-->
+        <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                {{-- Doctor --}}
                 <li>
                     <a class="waves-effect waves-dark" href="{{ route('admin.dashboard') }}">
                         <i class="far fa-circle text-success"></i><span class="hide-menu">Dashboard</span>
@@ -43,7 +42,11 @@
                         <li><a href="{{ route('admin.products.create') }}">Create new</a></li>
                     </ul>
                 </li>
-
+                <li>
+                    <a class="waves-effect waves-dark" href="{{ route('admin.orders.index') }}">
+                        <i class="far fa-circle text-success"></i><span class="hide-menu">Orders</span>
+                    </a>
+                </li>
                 <br>
                 <br>
                 <br>

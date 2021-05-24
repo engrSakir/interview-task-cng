@@ -19,4 +19,12 @@ class Product extends Model
     public function orders(){
         return $this->hasMany(OrderItem::class, 'product_id', 'id');
     }
+
+    // if product is deleted than auto delete depended data
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($product) {
+            $product->orders()->delete();
+        });
+    }
 }

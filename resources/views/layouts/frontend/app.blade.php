@@ -46,13 +46,15 @@
                             </div>
                             <div class="col-md-8 col-sm-9 col-xs-6">
                                 <div class="cart-menu">
-                                    <div class="user user-style-3 f-right">
-                                        <a href="#" id="open-button">
-                                            <i class="pe-7s-menu"></i>
+                                    @if (auth()->check())
+                                    <div class="user user-style-3 f-right logout-btn">
+                                        <a href="javascript:0" id="open-button">
+                                            <i class="pe-7s-lock"></i>
                                         </a>
                                     </div>
+                                    @endif
                                     <div class="search-style-2 f-right">
-                                        <a @guest class="icon-search-2" href="{{ route('login') }}" @else class="icon-search-2 logout-btn" href="javascript:0" @endguest>
+                                        <a class="icon-search-2" href="{{ route('login') }}">
                                             <i class="pe-7s-user"></i>
                                         </a>
                                     </div>

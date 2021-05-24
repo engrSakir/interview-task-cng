@@ -16,7 +16,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Product Orders</li>
                 </ol>
-                <a href="{{ route('admin.productOrder.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-folder-open"></i>  &nbsp; Back to List </a>
+                <a href="{{ route('admin.orders.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-folder-open"></i>  &nbsp; Back to List </a>
             </div>
         </div>
     </div>
@@ -24,48 +24,78 @@
 @section('content')
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <!-- Start row -->
         <div class="row">
-            <div class="col-md-12">
-                <div class="card border-danger text-center">
-                    <div class="card-header bg-danger">
-                        <h4 class="m-b-0 text-white">Order Details | Total items: {{ $productOrder->items->count() }}</h4></div>
+            <!-- Column -->
+            <div class="col-md-9 col-lg-9">
+                <div class="card">
+                    <div class="card-header bg-info">
+                        <h5 class="m-b-0 text-white">Order Items ({{ $order->items->count() }})</h5>
+                    </div>
                     <div class="card-body">
-                        <h3 class="card-title">{{ $productOrder->name }}</h3>
-                        <h4><span class="badge badge-success">{{ $productOrder->email  }}</span> &nbsp; <span class="badge badge-success">{{ $productOrder->phone  }}</span></h4>
-                        <h4> <span class="badge badge-success">{{ $productOrder->address  }}</span></h4>
-                        @if(!$productOrder->completed)
-                            <a href="javascript:void(0)" class="btn btn-primary cng-order-status-btn">Make as order completed</a>
-                        @else
-                            <a href="javascript:void(0)" class="btn btn-success cng-order-status-btn">Make as order incomplete</a>
-                        @endif
+                        <div class="table-responsive">
+                            <table class="table product-overview">
+                                <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th style="text-align:center">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($order->items->groupBy('product_id') as $item_orders)
+                                    @foreach($item_orders as $item_order)
+                                        <tr>
+                                            <td width="150"><img src="{{ asset($item_order->product->image ?? 'uploads/images/no-image.jpg') }}" alt="iMac" width="80"></td>
+                                            <td width="550">
+                                                <h5 class="font-500 text-danger">{{ $item_order->product->name }}</h5>
+                                            </td>
+                                            <td>BDT {{ $item_order->product->price }}</td>
+                                            <td>{{ $item_orders->count() }}</td>
+                                            <td width="150" align="center" class="font-500">BDT {{ $item_order->product->price * $item_orders->count() }}</td>
+                                        </tr>
+                                        @break
+                                    @endforeach
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <hr>
+                            <a href="{{ route('admin.orders.index') }}" class="btn btn-dark btn-outline"><i class="fa fa-arrow-left"></i> Back to orders</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- Column -->
+            <div class="col-md-3 col-lg-3">
                 <div class="card">
                     <div class="card-body">
-                        <ul class="timeline">
-                            @foreach($productOrder->items as $item)
-                            <li class="@if($loop->even) timeline-inverted @endif">
-                                <div class="timeline-badge @if($loop->even) success @else info @endif"><img class="img-responsive" alt="user" src="{{ $item->product->image ?? 'assets/frontend/image/resources/medicine2.png' }}"> </div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading ribbon-vwrapper">
-                                        <div class="ribbon ribbon-bookmark ribbon-vertical-l @if($loop->even) ribbon-success @else ribbon-info @endif">
-                                            <b>{{ $loop->iteration }}</b>
-                                        </div>
-                                        <h4 class="timeline-title">{{ $item->product->name ?? 'Not Found' }}</h4>
-                                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $item->product->company ?? 'Not Found' }}</small> </p>
-                                    </div>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
+                        <h5 class="card-title">CART SUMMARY</h5>
+                        <hr>
+                        <small>Total Price</small>
+                        <h2>BDT {{ \App\Models\Product::whereIn('id', $order->items->pluck('product_id'))->sum('price') }}</h2>
+                        <hr>
+                        @if($order->delivered)
+                            <button class="btn btn-warning pull-right col-12 cng-order-status-btn"><i class="fa fa fa-shopping-cart"></i> Make Order Un Completed</button>
+                        @else
+                            <button class="btn btn-danger pull-right col-12 cng-order-status-btn"><i class="fa fa fa-shopping-cart"></i> Make Order Completed</button>
+                        @endif
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Customer Info</h5>
+                        <hr>
+                        <h4><i class="ti-user"></i> {{ $order->user->name }}</h4>
+                        <h4><i class="ti-mobile"></i> {{ $order->phone }}</h4>
+                        <h4><i class="ti-email"></i> {{ $order->user->email }} </h4>
+                        <address><i class="ti-location-pin"></i> {{ $order->address }}</address>
+                        <hr>
+                        <small>{{ $order->note }}</small>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End row -->
     </div>
     <!-- End Contentbar -->
 @endsection
@@ -87,7 +117,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             method: 'PATCH',
-                            url: '{{ route('admin.productOrder.update', $productOrder) }}',
+                            url: '{{ route('admin.orders.update', $order) }}',
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             processData: false,
                             contentType: false,
@@ -101,7 +131,6 @@
                             },
                             success: function (data) {
                                 if (data.type == 'success'){
-                                    console.log(data.cart)
                                     Swal.fire({
                                         position: 'top-end',
                                         icon: data.type,
@@ -109,7 +138,7 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     }); setTimeout(function () {
-                                        location.replace(data.url);
+                                        location.reload();
                                     }, 800);
                                 }else{
                                     Swal.fire({
