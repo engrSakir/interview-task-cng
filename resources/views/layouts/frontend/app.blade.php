@@ -52,7 +52,7 @@
                                         </a>
                                     </div>
                                     <div class="search-style-2 f-right">
-                                        <a class="icon-search-2" href="{{ route('login') }}">
+                                        <a @guest class="icon-search-2" href="{{ route('login') }}" @else class="icon-search-2 logout-btn" href="javascript:0" @endguest>
                                             <i class="pe-7s-user"></i>
                                         </a>
                                     </div>

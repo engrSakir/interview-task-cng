@@ -28,5 +28,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'backend/', 'as' => 'admin.'],
     Route::resource('products', Admin\ProductController::class);
 });
 
+Route::get('/dashboard', function(){
+    if (auth()->user()->admin)
+        return redirect()->route('admin.dashboard');
+    return redirect()->route('index');
+});
 
 require __DIR__.'/auth.php';
