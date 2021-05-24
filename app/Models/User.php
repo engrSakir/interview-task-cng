@@ -40,4 +40,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+    // if user is deleted than auto delete depended data
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($user) {
+            $user->orders()->delete();
+        });
+    }
 }

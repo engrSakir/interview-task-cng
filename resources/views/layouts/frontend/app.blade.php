@@ -6,6 +6,7 @@
     <title>Jerin - Minimal eCommerce HTML Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/img/favicon.ico') }}">
     <!-- all css here -->
@@ -23,7 +24,9 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/demo.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/menu_elastic.css') }}"/>
-    <script src="{{ asset('assets/frontend/css/animate.css') }}assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="{{ asset('assets/frontend/js/vendor/modernizr-2.8.3.min.js') }}"></script>
+    <!--====== AJAX ======-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="canvas-wrapper">
@@ -54,36 +57,8 @@
                                         </a>
                                     </div>
                                     <div class="shopping-cart f-right">
-                                        <a class="top-cart" href="cart.html"><i class="pe-7s-cart"></i></a>
-                                        <span>01</span>
-                                        <ul>
-                                            <li>
-                                                <div class="cart-img-price">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="assets/img/cart/1.jpg" alt=""/></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <h3><a href="#">Headphone</a></h3>
-                                                        <span class="cart-price">1 x $ 299.00</span>
-                                                    </div>
-                                                    <div class="cart-del">
-                                                        <i class="pe-7s-close-circle"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <p class="total">
-                                                    Subtotal:
-                                                    <span>$299.00</span>
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="buttons">
-                                                    <a class="my-cart" href="cart.html">View Cart</a>
-                                                    <a class="checkout" href="checkout.html">Checkout</a>
-                                                </p>
-                                            </li>
-                                        </ul>
+                                        <a class="top-cart" href="{{ route('cart') }}"><i class="pe-7s-cart"></i></a>
+                                        <span class="cart-counter">{{ count(cart_items()) }}</span>
                                     </div>
                                     <div class="main-menu f-right">
                                         <nav>
@@ -254,7 +229,7 @@
     <!-- content-wrap end -->
 </div>
 <!-- all js here -->
-<script src="{{ asset('assets/frontend/js/vendor/jquery-1.12.0.min.js') }}"></script>
+<script src="{{ asset('assets/backend/node_modules/jquery/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/snap.svg-min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/jquery.meanmenu.js') }}"></script>
@@ -269,5 +244,9 @@
 <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/classie.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/main3.js') }}"></script>
+<script src="{{ asset('assets/helpers/helper.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@include('sweetalert::alert')
+@stack('script')
 </body>
 </html>
