@@ -82,7 +82,7 @@
                         <div class="your-order">
                             <h2>Your Order</h2>
                             <ul>
-                                @foreach(collect(cart_items())->groupBy('id') as $a => $products)
+                                @foreach(collect(cart_items())->groupBy('id') as $products)
                                     @foreach($products as $product)
                                         <li> {{ $product->name }} ({{ $products->count() }}) <span class="each-price">{{ $product->price * $products->count() }}</span></li>
                                         @break

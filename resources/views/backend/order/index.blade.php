@@ -50,8 +50,11 @@
                                         </td>
                                         <td>
                                             <b>Quantity: &nbsp;</b>{{ $order->items->count() }} <br>
-                                            <b>Total Price: &nbsp;</b>BDT {{ \App\Models\Product::whereIn('id', $order->items->pluck('product_id'))->sum('price') }} <br>
-                                            <b>Order Time: &nbsp;</b>{{ $order->created_at->format('h:m a d-m-Y') }} <br>
+                                            <b>Total Price:
+                                                &nbsp;</b>BDT {{ \App\Models\Product::whereIn('id', $order->items->pluck('product_id'))->sum('price') }}
+                                            <br>
+                                            <b>Order Time: &nbsp;</b>{{ $order->created_at->format('h:m a d-m-Y') }}
+                                            <br>
                                             <a class="mytooltip" href="javascript:void(0)"> <i
                                                     class="fa fa-fw fa-edit"></i>Order note <span
                                                     class="tooltip-content3"> {{ $order->note }}</span> </a>
@@ -59,24 +62,24 @@
                                         </td>
                                         <td>
                                             @if($order->delivered)
-                                                Order Process <br> completed <br> Time: &nbsp;</b>{{ $order->updated_at->format('h:m a d-m-Y') }}
+                                                Order Process <br> completed <br> Time:
+                                                &nbsp;</b>{{ $order->updated_at->format('h:m a d-m-Y') }}
                                             @else
                                                 Order Process <br> in completed
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="col-6 mb-2">
+                                            <div class="col-8 mb-2">
                                                 <a href="{{ route('admin.orders.show', $order) }}" type="button"
                                                    class="btn waves-effect waves-light btn-block btn-info">Show {{ $order->items->count() }}</a>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-8">
                                                 <button type="button"
                                                         class="btn waves-effect waves-light btn-block btn-primary"
                                                         onclick="delete_function(this)"
                                                         value="{{ route('admin.orders.destroy', $order) }}">Delete
                                                 </button>
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach

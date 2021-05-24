@@ -94,9 +94,11 @@ class FrontendController extends Controller
             'note' => 'nullable|string',
         ]);
 
+        //Chek cart empty or not
         if(collect(Session::get('cart'))->count() < 1){
             return back()->withErrors('Cart is empty');
         }
+        //Make new order
         $order = new Order();
         $order->phone   =   $request->phone;
         $order->address =   $request->address;
@@ -104,12 +106,22 @@ class FrontendController extends Controller
         $order->user_id =   auth()->user()->id;
         $order->save();
 
+        //Get cart items
         foreach (Session::get('cart') as $cart){
             $order_item = new OrderItem();
             $order_item->order_id   = $order->id;
             $order_item->product_id = $cart->id;
             $order_item->save();
         }
+
+        //Minimize product quantity from store
+        foreach($order->items->groupBy('product_id') as $product_id => $item_orders){
+            $product = Product::find($product_id);
+            $product->quantity = $product->quantity - $item_orders->count();
+            $product->save();
+        }
+
+        //Make cart empty
         Session::put('cart', []); // make cart as empty
         return back()->withSuccess('Order completed');
     }

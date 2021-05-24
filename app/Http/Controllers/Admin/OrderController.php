@@ -99,6 +99,17 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        try {
+            $order->delete();
+            return response()->json([
+                'type' => 'success',
+                'message' => ''
+            ]);
+        }catch (\Exception$exception){
+            return response()->json([
+                'type' => 'error',
+                'message' => ''
+            ]);
+        }
     }
 }
