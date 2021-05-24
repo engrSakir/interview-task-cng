@@ -26,6 +26,35 @@
     <div class="contentbar">
         <!-- Start row -->
         <div class="row">
+            <!-- Column -->
+            <div class="col-md-6 col-lg-4 col-xlg-2">
+                <div class="card">
+                    <div class="box bg-dark text-center">
+                        <h1 class="font-light text-white">{{ $products->count() }}</h1>
+                        <h6 class="text-white">Total Products</h6>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-4 col-xlg-2">
+                <div class="card">
+                    <div class="box bg-megna text-center">
+                        <h1 class="font-light text-white">{{ $products->sum('price') }}</h1>
+                        <h6 class="text-white">Products of BDT</h6>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-4 col-xlg-2">
+                <div class="card">
+                    <div class="box bg-warning text-center">
+                        <h1 class="font-light text-white">{{ $products->sum('quantity') }}</h1>
+                        <h6 class="text-white">Total Quantity</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <!-- Row -->
                 <div class="row">

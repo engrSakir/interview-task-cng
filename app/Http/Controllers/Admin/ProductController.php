@@ -32,10 +32,9 @@ class ProductController extends Controller
                 ->rawColumns(['image','action'])
                 ->make(true);
         }else{
-            return view('backend.product.index');
+        $products = Product::orderBy('id', 'desc')->get();
+        return view('backend.product.index', compact('products'));
         }
-//        $products = Product::orderBy('id', 'desc')->get();
-//        return view('backend.product.index', compact('products'));
     }
 
     /**
