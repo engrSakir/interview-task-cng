@@ -21,3 +21,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [Api\AuthController::class, 'login']);
 Route::post('/registration', [Api\AuthController::class, 'registration']);
+Route::get('/products', [Api\ProductController::class, 'index']);
+Route::post('/products', [Api\ProductController::class, 'store'])->middleware(['auth:sanctum']);
