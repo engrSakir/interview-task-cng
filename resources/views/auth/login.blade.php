@@ -26,6 +26,8 @@
                                         <a href="#">Forgot your Password?</a>
                                     </div>
                                     <button class="login-btn" type="submit">Login</button>
+                                    <a href="{{ route('login.github') }}" class="button login-btn text-center" type="submit">Login GitHub</a>
+                                    <a href="{{ route('login.google') }}" class="button login-btn text-center" type="submit">Login Google</a>
                                 </div>
                                 <div class="new-account">
                                     <p>new here ? <a href="{{ route('register') }}">Create an new account .</a></p>
