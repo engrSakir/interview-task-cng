@@ -61,7 +61,7 @@
                 formData.append('product', $(this).val())
                 $.ajax({
                     method: 'POST',
-                    url: '{{ route('addToCard') }}',
+                    url: '{{ route('addToCart') }}',
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     data: formData,
                     processData: false,

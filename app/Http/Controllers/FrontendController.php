@@ -21,7 +21,7 @@ class FrontendController extends Controller
         return view('frontend.cart');
     }
 
-    public function addToCard(Request $request){
+    public function addToCart(Request $request){
         if(!Auth::check()){
             return response()->json([
                 'type' => 'error',
@@ -38,7 +38,7 @@ class FrontendController extends Controller
         }
 
         try {
-            $request->session()->push('cart', Product::findOrFail($request->product));
+            Session::push('cart', Product::findOrFail($request->product));
             return response()->json([
                 'type' => 'success',
                 'message' => 'Successfully add to cart',
@@ -52,7 +52,7 @@ class FrontendController extends Controller
         }
     }
 
-    public function removeFromCard(Request $request){
+    public function removeFromCart(Request $request){
         $request->validate([
             'product' => 'required|exists:products,id'
         ]);

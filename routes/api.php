@@ -19,7 +19,14 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::post('/login', [Api\AuthController::class, 'login']);
-Route::post('/registration', [Api\AuthController::class, 'registration']);
-Route::get('/products', [Api\ProductController::class, 'index']);
-Route::post('/products', [Api\ProductController::class, 'store'])->middleware(['auth:sanctum']);
+Route::post('/login', [Api\AuthController::class, 'login']);    //Login
+Route::get('/logout', [Api\AuthController::class, 'logout'])->middleware(['auth:sanctum']);    //logout
+Route::post('/registration', [Api\AuthController::class, 'registration']);  //Registration
+
+Route::get('/products', [Api\ProductController::class, 'index']);   // Show All Products
+Route::post('/products', [Api\ProductController::class, 'store'])->middleware(['auth:sanctum']); //Product Add
+
+Route::get('/cart', [Api\ProductController::class, 'cart'])->middleware(['auth:sanctum']);  //All cart items
+Route::post('/cart', [Api\ProductController::class, 'addToCart'])->middleware(['auth:sanctum']);    //Add to cart item
+
+Route::post('/cart/order', [Api\ProductController::class, 'order'])->name('order')->middleware(['auth:sanctum']);    //Order or checkout

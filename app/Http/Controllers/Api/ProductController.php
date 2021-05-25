@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -117,5 +121,104 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function cart(){
+        if (!Session::get('cart')){
+            Session::put('cart', []);
+        }
+        $cart_items = Session::get('cart');
+
+        try {
+            $response = [
+                'type' => 'success',
+                'message' => 'Successfully get cart items',
+                'cart_items' => $cart_items,
+            ];
+            return response($response, 201);
+        }catch (\Exception $exception){
+            $response = [
+                'type' => 'error',
+                'message' => $exception->getMessage(),
+            ];
+            return response($response, 203);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function addToCart(Request $request){
+        $request->validate([
+            'product' => 'required|exists:products,id'
+        ]);
+
+        if (!Session::get('cart')){
+            Session::put('cart', []);
+        }
+
+        try {
+            $request->session()->push('cart', Product::findOrFail($request->product));
+            $response = [
+                'type' => 'success',
+                'message' => 'Successfully add to cart',
+                'cart_items' => Session::get('cart'),
+            ];
+            return response($response, 201);
+        }catch (\Exception $exception){
+            $response = [
+                'type' => 'error',
+                'message' => $exception->getMessage(),
+            ];
+            return response($response, 203);
+        }
+    }
+
+    public function order(Request $request){
+        $request->validate([
+            'phone' => 'required|string|max:18',
+            'address' => 'required|string',
+            'note' => 'nullable|string',
+        ]);
+
+        //Chek cart empty or not
+        if(collect(Session::get('cart'))->count() < 1){
+            return response()->json([
+                'message' => 'Your cart is empty'
+            ]);
+        }
+        //Make new order
+        $order = new Order();
+        $order->phone   =   $request->phone;
+        $order->address =   $request->address;
+        $order->note    =   $request->note;
+        $order->user_id =   auth()->user()->id;
+        $order->save();
+
+        //Get cart items
+        foreach (Session::get('cart') as $cart){
+            $order_item = new OrderItem();
+            $order_item->order_id   = $order->id;
+            $order_item->product_id = $cart->id;
+            $order_item->save();
+        }
+
+        //Minimize product quantity from store
+        foreach($order->items->groupBy('product_id') as $product_id => $item_orders){
+            $product = Product::find($product_id);
+            $product->quantity = $product->quantity - $item_orders->count();
+            $product->save();
+        }
+
+        //Make cart empty
+        Session::put('cart', []); // make cart as empty
+        return response()->json([
+            'message' => 'Order completed',
+            'order' => $order,
+        ]);
     }
 }

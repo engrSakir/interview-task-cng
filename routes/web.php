@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 //Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('/cart', [FrontendController::class, 'cart'])->middleware('auth')->name('cart');
-Route::post('/cart', [FrontendController::class, 'addToCard'])->name('addToCard'); //Ajax request
-Route::delete('/cart/{product}', [FrontendController::class, 'removeFromCard'])->name('removeFromCard'); //Ajax request
-Route::post('/cart/order', [FrontendController::class, 'order'])->name('order');
+Route::post('/cart', [FrontendController::class, 'addToCart'])->name('addToCart'); //Ajax request
+Route::delete('/cart/{product}', [FrontendController::class, 'removeFromCart'])->name('removeFromCart'); //Ajax request
+Route::post('/cart/order', [FrontendController::class, 'order'])->name('order')->middleware('auth');
 
 //Admin Routes
 Route::group(['middleware' => 'auth', 'prefix' => 'backend/', 'as' => 'admin.'], function(){
