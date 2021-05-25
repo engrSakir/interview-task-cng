@@ -33,7 +33,7 @@
     <div class="content-wrap">
         <div class="content">
             <!-- header start -->
-            <header class="header-area home-style-2">
+            <header class="header-area home-style-2" style="background-color:#aaaaaa;">
                 <div class="header-bottom">
                     <div class="container">
                         <div class="row">
@@ -70,6 +70,9 @@
                                                 </li>
                                                 <li>
                                                     <a href="https://documenter.getpostman.com/view/11483227/TzXwExmU" target="_blank">API Documentation</a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://github.com/mdsakirahmed/interview-task" target="_blank">GitHub</a>
                                                 </li>
                                             </ul>
                                         </nav>
