@@ -40,7 +40,7 @@
                             <div class="col-md-4 col-sm-3 col-xs-6">
                                 <div class="logo">
                                     <a href="{{ url('/') }}">
-                                        <img src="{{ asset('assets/frontend/img/logo/logo-black.png') }}" alt="">
+                                        <b>{{ config('app.name') }}</b>
                                     </a>
                                 </div>
                             </div>
@@ -68,10 +68,8 @@
                                                 <li>
                                                     <a href="{{ url('/') }}">home</a>
                                                 </li>
-                                                <li><a href="#">API Documentation</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="about-us.html">about us </a></li>
-                                                    </ul>
+                                                <li>
+                                                    <a href="https://documenter.getpostman.com/view/11483227/TzXwExmU" target="_blank">API Documentation</a>
                                                 </li>
                                             </ul>
                                         </nav>

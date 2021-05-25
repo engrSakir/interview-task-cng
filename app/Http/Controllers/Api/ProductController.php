@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -109,7 +110,44 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name'      => 'required|string',
+            'price'     => 'required|numeric',
+            'quantity'  => 'required|numeric',
+            'image'     => 'nullable|image',
+        ]);
+
+        $product->name      =   $request->name;
+        $product->price     =   $request->price;
+        $product->quantity  =   $request->quantity;
+        if($request->hasFile('image')){
+            if ($product->image != null)
+                File::delete(public_path($product->image));
+            $image             = $request->file('image');
+            $folder_path       = 'uploads/images/';
+            if (!file_exists($folder_path)) {
+                mkdir($folder_path, 0777, true);
+            }
+            $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
+            //resize and save to server
+            Image::make($image->getRealPath())->save($folder_path.$image_new_name);
+            $product->image = $folder_path.$image_new_name;
+        }
+        try {
+            $product->save();
+            $response = [
+                'type' => 'success',
+                'message' => 'Successfully updated',
+                'product' => $product,
+            ];
+            return response($response, 201);
+        }catch(\Exception $exception){
+            $response = [
+                'type' => 'error',
+                'message' => $exception->getMessage(),
+            ];
+            return response($response, 203);
+        }
     }
 
     /**
@@ -120,7 +158,22 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try {
+            if ($product->image != null)
+                File::delete(public_path($product->image)); //Old image delete
+            $product->delete();
+           $response = [
+                'type' => 'success',
+                'message' => 'Successfully deleted'
+            ];
+            return response($response, 201);
+        }catch (\Exception$exception){
+            $response = [
+                'type' => 'error',
+                'message' => $exception->getMessage(),
+            ];
+            return response($response, 203);
+        }
     }
 
     /**
@@ -188,6 +241,7 @@ class ProductController extends Controller
         //Chek cart empty or not
         if(collect(Session::get('cart'))->count() < 1){
             return response()->json([
+                'type' => 'error',
                 'message' => 'Your cart is empty'
             ]);
         }
@@ -217,6 +271,7 @@ class ProductController extends Controller
         //Make cart empty
         Session::put('cart', []); // make cart as empty
         return response()->json([
+            'type' => 'success',
             'message' => 'Order completed',
             'order' => $order,
         ]);

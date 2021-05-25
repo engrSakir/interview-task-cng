@@ -157,7 +157,7 @@ class ProductController extends Controller
     {
         try {
             if ($product->image != null)
-                File::delete(public_path($product->avatar)); //Old image delete
+                File::delete(public_path($product->image)); //Old image delete
             $product->delete();
             return response()->json([
                 'type' => 'success',
