@@ -4,9 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@stack('title') | {{ config('app.name') }}</title>
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!--  Essential META Tags -->
+    <meta content="author" name="MD. SAKIR AHMED">
+    <meta content="keywords" name="sakir, ecommerce, api, developer">
+    <meta property="og:title" content="MD. SAKIR AHMED">
+    <meta property="og:description" content="Software Engineer | +880 1304-734623">
+    <meta property="og:image" content="{{ asset('uploads/images/sakir-meta-image.png') }}">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:type" content="website"/>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/img/favicon.ico') }}">
     <!-- all css here -->
