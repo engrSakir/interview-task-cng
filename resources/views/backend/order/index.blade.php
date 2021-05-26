@@ -37,7 +37,7 @@
                 <div class="card">
                     <div class="box bg-primary text-center">
                         <h1 class="font-light text-white">{{ $orders->where('delivered' , false)->count() }}</h1>
-                        <h6 class="text-white">Completed In Completed</h6>
+                        <h6 class="text-white">Incomplete Order</h6>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="card">
                     <div class="box bg-success text-center">
                         <h1 class="font-light text-white">{{ $orders->where('delivered' , true)->count() }}</h1>
-                        <h6 class="text-white">Completed Completed</h6>
+                        <h6 class="text-white">Completed Order</h6>
                     </div>
                 </div>
             </div>
