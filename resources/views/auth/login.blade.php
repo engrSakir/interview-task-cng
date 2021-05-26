@@ -26,8 +26,9 @@
                                         <a href="#">Forgot your Password?</a>
                                     </div>
                                     <button class="login-btn" type="submit">Login</button>
-                                    <a href="{{ route('login.socialite','github') }}" class="button login-btn text-center">Login GitHub</a>
-                                    <a href="{{ route('login.socialite','google') }}" class="button login-btn text-center">Login Google</a>
+                                    <a href="{{ route('login.socialite','github') }}" class="button login-btn text-center">Login with GitHub</a>
+                                    <a href="{{ route('login.socialite','google') }}" class="button login-btn text-center">Login with Google</a>
+                                    <a href="{{ route('login.socialite','facebook') }}" class="button login-btn text-center">Login with Facebook</a>
                                 </div>
                                 <div class="new-account">
                                     <p>new here ? <a href="{{ route('register') }}">Create an new account .</a></p>
