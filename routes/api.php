@@ -24,9 +24,9 @@ Route::get('/logout', [Api\AuthController::class, 'logout'])->middleware(['auth:
 Route::post('/registration', [Api\AuthController::class, 'registration']);  //Registration
 
 Route::get('/products', [Api\ProductController::class, 'index']);   // Show All Products
-Route::post('/products', [Api\ProductController::class, 'store'])->middleware(['auth:sanctum']); //Product Add
-Route::patch('/products/{product}', [Api\ProductController::class, 'update'])->middleware(['auth:sanctum']); //Product Add
-Route::delete('/products/{product}', [Api\ProductController::class, 'destroy'])->middleware(['auth:sanctum']); //Product Add
+Route::post('/products', [Api\ProductController::class, 'store'])->middleware(['auth:sanctum', 'admin']); //Product add
+Route::patch('/products/{product}', [Api\ProductController::class, 'update'])->middleware(['auth:sanctum', 'admin']); //Product update
+Route::delete('/products/{product}', [Api\ProductController::class, 'destroy'])->middleware(['auth:sanctum', 'admin']); //Product delete
 
 Route::get('/cart', [Api\ProductController::class, 'cart'])->middleware(['auth:sanctum']);  //All cart items
 Route::post('/cart', [Api\ProductController::class, 'addToCart'])->middleware(['auth:sanctum']);    //Add to cart item

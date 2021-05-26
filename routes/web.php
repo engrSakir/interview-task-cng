@@ -23,7 +23,7 @@ Route::delete('/cart/{product}', [FrontendController::class, 'removeFromCart'])-
 Route::post('/cart/order', [FrontendController::class, 'order'])->name('order')->middleware('auth');
 
 //Admin Routes
-Route::group(['middleware' => 'auth', 'prefix' => 'backend/', 'as' => 'admin.'], function(){
+Route::group(['middleware' => ['admin', 'auth'], 'prefix' => 'backend/', 'as' => 'admin.'], function(){
     Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', Admin\ProductController::class);
     Route::resource('orders', Admin\OrderController::class);
