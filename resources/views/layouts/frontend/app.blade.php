@@ -40,7 +40,7 @@
                             <div class="col-md-4 col-sm-3 col-xs-6">
                                 <div class="logo">
                                     <a href="{{ url('/') }}">
-                                        <b>{{ config('app.name') }}</b>
+                                        <h3 style="margin:-5px;"><b>{{ config('app.name') }}</b></h3>
                                     </a>
                                 </div>
                             </div>
@@ -121,28 +121,27 @@
                                 <div class="footer-widget mb-30">
                                     <div class="footer-logo">
                                         <a href="{{ url('/') }}">
-                                            <img src="{{ asset('assets/frontend/img/logo/logo-black.png') }}" alt="">
+                                            <h3><b>{{ config('app.name') }}</b></h3>
                                         </a>
                                     </div>
                                     <div class="widget-info">
                                         <p>
                                             <i class="pe-7s-mail"></i>
                                             <span>
-                                                    <a href="mailto:contact@company.com">contact@company.com</a>
+                                                    <a href="m.sakirahmed@gmail.com">m.sakirahmed@gmail.com</a>
                                                 </span>
                                         </p>
                                         <p>
                                             <i class="pe-7s-call"></i>
-                                            <span>+001 2233 456 </span>
+                                            <span>+880 1304-734623 </span>
                                         </p>
                                     </div>
                                     <div class="footer-social">
                                         <ul>
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                            <li><a href="https://www.facebook.com/DeveloperSakir/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="https://www.linkedin.com/in/mdsakirahmed/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                            <li><a href="https://www.instagram.com/sakir.dev/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                            <li><a href="https://github.com/mdsakirahmed" target="_blank"><i class="fa fa-github"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -150,11 +149,12 @@
                             <div class="col-md-2 hidden-sm">
                                 <div class="footer-widget mb-30">
                                     <div class="footer-title">
-                                        <h3>Categories</h3>
+                                        <h3>Quick Link</h3>
                                     </div>
                                     <div class="widget-text">
                                         <ul>
-                                            <li><a href="#"> Clothing</a></li>
+                                            <li><a href="{{ route('login') }}"> Login </a></li>
+                                            <li><a href="{{ route('register') }}"> Registration </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -166,7 +166,8 @@
                                     </div>
                                     <div class="widget-text">
                                         <ul>
-                                            <li><a href="#">About Us </a></li>
+                                            <li><a href="{{ route('index') }}">eCommerce </a></li>
+                                            <li><a href="{{ route('cart') }}">Cart </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -174,12 +175,12 @@
                             <div class="col-md-2 col-sm-3">
                                 <div class="footer-widget mb-30">
                                     <div class="footer-title">
-                                        <h3>Quick Links</h3>
+                                        <h3>About</h3>
                                     </div>
                                     <div class="widget-text">
                                         <ul>
-                                            <li><a href="#">Login </a></li>
-
+                                            <li><a href="javascript:0"> <del>About Project </del> </a></li>
+                                            <li><a href="javascript:0"> <del>Project SRS </del> </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -187,11 +188,12 @@
                             <div class="col-md-3 col-sm-3">
                                 <div class="footer-widget mb-30">
                                     <div class="footer-title">
-                                        <h3>Company</h3>
+                                        <h3>API</h3>
                                     </div>
                                     <div class="widget-text">
                                         <ul>
-                                            <li><a href="#">Return Policy </a></li>
+                                            <li><a href="https://documenter.getpostman.com/view/11483227/TzXwExmU" target="_blank">API Collection </a></li>
+                                            <li><a href="https://github.com/mdsakirahmed/interview-task" target="_blank">GitHub </a></li>
 
                                         </ul>
                                     </div>
@@ -204,9 +206,9 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="copyright">
                                     <p>
-                                        Copyright © 2018
-                                        <a href="#"> themeglass</a>
-                                        . All Rights Reserved.
+                                        Copyright © {{ date('Y') }}
+                                        <a href="https://sakir.dev/" target="_blank"> <b>SAKIR</b> </a>
+                                         All Rights Reserved.
                                     </p>
                                 </div>
                             </div>
