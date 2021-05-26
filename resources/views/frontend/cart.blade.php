@@ -1,4 +1,5 @@
 @extends('layouts.frontend.app')
+@push('title') Cart @endpush
 @section('content')
     <div class="checkout-area ptb-100">
         <div class="container">

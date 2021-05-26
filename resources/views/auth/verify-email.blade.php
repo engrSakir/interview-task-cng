@@ -1,39 +1,41 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-        </div>
-
-        @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-            </div>
-        @endif
-
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
-                @csrf
-
-                <div>
-                    <x-button>
-                        {{ __('Resend Verification Email') }}
-                    </x-button>
+@extends('layouts.frontend.app')
+@push('title') Verify Email @endpush
+@section('content')
+    <div class="login-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="login-content">
+                        <div class="login-title">
+                            <h4>Verify Email</h4>
+                            <p>Verify your email address.</p>
+                            @if (session('status') == 'verification-link-sent')
+                                <div class="alert alert-success" role="alert">
+                                    {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="login-form">
+                            <form action="{{ route('verification.send') }}" method="post">
+                                @csrf
+                                <input name="email" placeholder="Email" type="email" title="Enter your email" value="{{ old('email') }}" required>
+                                @error('email')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                                <div class="button-remember">
+                                    <button class="login-btn" type="submit">SUBMIT</button>
+                                </div>
+                                <div class="new-account">
+                                    <p>new here ? <a href="{{ route('register') }}">Create an new account .</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{ __('Log Out') }}
-                </button>
-            </form>
+            </div>
         </div>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+@endsection
+

@@ -1,4 +1,5 @@
 @extends('layouts.frontend.app')
+@push('title') Index @endpush
 @section('content')
     <div class="portfolio-area pt-100 pb-70">
         <div class="container">

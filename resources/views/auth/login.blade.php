@@ -1,4 +1,5 @@
 @extends('layouts.frontend.app')
+@push('title') Login @endpush
 @section('content')
     <div class="login-area ptb-100">
         <div class="container">
@@ -23,7 +24,7 @@
                                     <div class="checkbox-remember">
                                         <input id="checkbox" type="checkbox" name="remember">
                                         <label>Remember me</label>
-                                        <a href="#">Forgot your Password?</a>
+                                        <a href="{{ route('password.request') }}">Forgot your Password?</a>
                                     </div>
                                     <button class="login-btn" type="submit">Login</button>
                                     <a href="{{ route('login.socialite','github') }}" class="button login-btn text-center">Login with GitHub</a>

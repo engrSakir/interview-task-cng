@@ -1,4 +1,5 @@
 @extends('layouts.frontend.app')
+@push('title') Registration @endpush
 @section('content')
     <div class="login-area ptb-100">
         <div class="container">

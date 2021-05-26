@@ -1,36 +1,35 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+@extends('layouts.frontend.app')
+@push('title') Confirm Password @endpush
+@section('content')
+    <div class="login-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="login-content">
+                        <div class="login-title">
+                            <h4>Confirm Password</h4>
+                            <p>Please confirm your password before continuing.</p>
+                        </div>
+                        <div class="login-form">
+                            <form action="{{ route('password.confirm') }}" method="post">
+                                @csrf
+                                <input name="password" placeholder="Password" type="password" title="Enter your password" required>
+                                @error('password')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                                <div class="button-remember">
+                                    <button class="login-btn" type="submit">Confirm</button>
+                                </div>
+                                <div class="new-account">
+                                    <p>new here ? <a href="{{ route('register') }}">Create an new account .</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.confirm') }}">
-            @csrf
-
-            <!-- Password -->
-            <div>
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <div class="flex justify-end mt-4">
-                <x-button>
-                    {{ __('Confirm') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+@endsection
