@@ -16,6 +16,9 @@
             </ul>
             <ul class="navbar-nav my-lg-0">
                 <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light logout-btn" href="javascript:0"><i class="fa fa-lock"></i></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" target="_blank" href="{{ route('index') }}"><i class="fa fa-globe"></i></a>
                 </li>
                 <li class="nav-item right-side-toggle">
